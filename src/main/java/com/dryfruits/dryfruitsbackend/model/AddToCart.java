@@ -1,13 +1,13 @@
 package com.dryfruits.dryfruitsbackend.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -19,13 +19,20 @@ public class AddToCart {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private int userId;
-    private int productId;
+    private int productVarietyId;
     private int price;
     private String image;
     private int quantity;
     private int unitPrice;
 
-    private Date createdAt = new Date();
-    private Date updatedAt;
-    private Date deletedAt;
+    @CreationTimestamp
+    @Column(name = "created_at", columnDefinition = "DATETIME", updatable = false)
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    @Column(name = "updated_at", columnDefinition = "DATETIME")
+    private LocalDateTime updatedAt;
+
+    @Column(name = "deleted_at", columnDefinition = "DATETIME")
+    private LocalDateTime deletedAt;
 }

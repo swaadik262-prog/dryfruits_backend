@@ -18,7 +18,9 @@ public class AddToCartService {
         return addToCartRepository.getCartDetailsByUserId(userId);
     }
 
-    public void saveInCart(AddToCart addToCart) {
+    public void saveInCart(int userId, AddToCart addToCart) {
+        addToCart.setUserId(userId);
         addToCartRepository.save(addToCart);
+        System.out.println(userId);
     }
 }

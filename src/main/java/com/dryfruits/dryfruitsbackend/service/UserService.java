@@ -5,6 +5,7 @@ import com.dryfruits.dryfruitsbackend.model.Type;
 import com.dryfruits.dryfruitsbackend.model.User;
 import com.dryfruits.dryfruitsbackend.repository.UserRepository;
 import com.dryfruits.dryfruitsbackend.util.JwtUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,11 +16,15 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.Date;
 
 @Service
 public class UserService {
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
     private final UserRepository userRepository;
     private final Path uploadDir;
@@ -42,14 +47,17 @@ public class UserService {
             user.setName(name);
             user.setPhoneNo(phoneNo);
             user.setType(parseType(typeStr));
-            user.setCreatedAt(new Date());
-            user.setUpdatedAt(new Date());
 
-            String token = JwtUtil.generateToken(name, phoneNo, typeStr);
+            LocalDateTime dateTime = LocalDateTime.now();
+            user.setCreatedAt(dateTime);
+            user.setUpdatedAt(dateTime);
+            User saved = userRepository.save(user);
+
+
+            String token = jwtUtil.generateToken(phoneNo, user.getId());
 
             user.setToken(token);
 
-            User saved = userRepository.save(user);
 
             // If an image file was uploaded, store it and update user's profile path
             String profilePath = null;
@@ -64,7 +72,7 @@ public class UserService {
 
             if (profilePath != null) {
                 saved.setProfile(profilePath);
-                saved.setUpdatedAt(new Date());
+                saved.setUpdatedAt(dateTime);
                 userRepository.save(saved);
             }
 
