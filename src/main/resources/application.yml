@@ -7,6 +7,13 @@ spring:
     username: sql12808292
     password: mGTJ7dzsij
     driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 4
+      minimum-idle: 1
+      connection-timeout: 30000
+      max-lifetime: 1800000
+      idle-timeout: 300000
+      leak-detection-threshold: 2000
 
   jpa:
     hibernate:
@@ -24,6 +31,7 @@ spring:
   web:
     resources:
       static-locations: file:uploads/
+
 jwt:
   secret: Rk9QS0pQbVRVeE1YdVdtZ1ZxUnhWbDhxS1d4dG1Ud0s
 bcrypt:
