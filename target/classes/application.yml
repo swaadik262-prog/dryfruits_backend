@@ -3,10 +3,22 @@ app:
 
 spring:
   datasource:
-    url: jdbc:mysql://sql12.freesqldatabase.com:3306/sql12808292?useSSL=false&serverTimezone=UTC
-    username: sql12808292
-    password: mGTJ7dzsij
+    url: jdbc:mysql://localhost:3306/dryfruits_info?useSSL=false&serverTimezone=UTC
+    username: root
+    password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
+
+#    url: jdbc:mysql://sql12.freesqldatabase.com:3306/sql12808292?useSSL=false&serverTimezone=UTC
+#    username: sql12808292
+#    password: mGTJ7dzsij
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    hikari:
+#      maximum-pool-size: 4
+#      minimum-idle: 1
+#      connection-timeout: 30000
+#      max-lifetime: 1800000
+#      idle-timeout: 300000
+#      leak-detection-threshold: 2000
 
   jpa:
     hibernate:
@@ -24,6 +36,7 @@ spring:
   web:
     resources:
       static-locations: file:uploads/
+
 jwt:
   secret: Rk9QS0pQbVRVeE1YdVdtZ1ZxUnhWbDhxS1d4dG1Ud0s
 bcrypt:
